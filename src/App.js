@@ -8,16 +8,33 @@ const App = () => {
   console.log(`${varDate.getDate()} + ${count}`)
   varDate.setDate(varDate.getDate() + count)
 
+  const handleReset = () => {
+    setCount(0)
+    setStep(1)
+  }
+
   return (
     <center>
       <p>
-        <button onClick={() => setStep((s) => s - 1)}>-</button>
-        Step:{step}
-        <button onClick={() => setStep((s) => s + 1)}>+</button>
+        <input
+          type="range"
+          min="0"
+          max="10"
+          value={step}
+          onChange={(e) => setStep(Number(e.target.value))}
+          // step="5"
+        />
+        {step}
       </p>
       <p>
         <button onClick={() => setCount((c) => c - step)}>-</button>
-        Count:{count}
+        <input
+          type="text"
+          value={count}
+          onChange={(e) => {
+            setCount(Number(e.target.value))
+          }}
+        />
         <button onClick={() => setCount((c) => c + step)}>+</button>
       </p>
       <p>
@@ -29,6 +46,18 @@ const App = () => {
               : `${count} days ago was `}
         </span>
         <span>{varDate.toLocaleDateString()}</span>
+
+        <div>
+          {count !== 0 || step !== 1 ? (
+            <button
+              onClick={() => {
+                handleReset()
+              }}
+            >
+              Reset
+            </button>
+          ) : null}
+        </div>
       </p>
     </center>
   )
